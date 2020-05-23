@@ -1,4 +1,5 @@
 # Countersign
+![](https://github.com/jsextonn/countersign/workflows/build/badge.svg)
 
 `countersign - A signal or password given in reply to a soldier on guard.`
 
