@@ -35,7 +35,7 @@ class DigitGenerationStrategy:
 
     def __init__(self,
                  digit_count: int,
-                 placement: DigitPlacementStrategy,
+                 placement: Optional[DigitPlacementStrategy] = None,
                  unique: bool = True,
                  digits: Optional[Sequence[int]] = None):
         """
@@ -50,6 +50,9 @@ class DigitGenerationStrategy:
         if digits is None:
             digits = range(10)
         string_digits = [str(digit) for digit in digits]
+
+        if placement is None:
+            placement = DigitPlacementStrategy.AFTER
 
         self.digits = string_digits
         self.digit_count = digit_count
