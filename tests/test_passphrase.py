@@ -1,7 +1,6 @@
 import itertools
 import re
 import string
-from re import Pattern
 from typing import Sequence, Generator
 
 import pytest
@@ -57,7 +56,7 @@ def test_passphrase_correctly_places_digits(test_words: Sequence[str],
                                             word_count: int,
                                             digit_count: int,
                                             placement_strategy: DigitPlacementStrategy,
-                                            pattern: Pattern):
+                                            pattern):
     digit_strategy = DigitGenerationStrategy(digit_count=digit_count,
                                              placement=placement_strategy,
                                              unique=False)
