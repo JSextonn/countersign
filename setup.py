@@ -11,6 +11,7 @@ setuptools.setup(
     author_email="justinsexton.dev@gmail.com",
     description="Lightweight API that helps consumers generate random passwords and phrases.",
     url="https://github.com/JSextonn/countersign.git",
+    python_requires='>=3.6',
     keywords=[
         'password',
         'password-generator',

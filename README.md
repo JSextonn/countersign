@@ -7,6 +7,8 @@ Countersign is a light-weight python library for generating highly customizable 
 
 ## Installation
 
+Requires python 3.6 or above
+
 `pip install countersign`
 
 ## Usage
