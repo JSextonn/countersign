@@ -1,3 +1,6 @@
+# 0.1.1
+- Countersign module now exposes important classes through the countersign module and not just through submodules.
+
 # 0.1.0
-- Generate password(s)
-- Generate passphrase(s)
+- Added generate password and passwords functionality
+- Added generate passphrase and passphrases functionality
