@@ -5,8 +5,8 @@ from typing import Sequence, Generator
 
 import pytest
 
-from countersign.passphrase import OneTimePasswordGenerator, DigitGenerationStrategy, DigitPlacementStrategy, \
-    passphrase, passphrases
+import countersign
+from countersign import DigitPlacementStrategy
 
 
 @pytest.fixture
@@ -16,7 +16,7 @@ def test_words() -> Sequence[str]:
 
 def test_one_time_password_generator_generates_only_one_unique_string():
     sample_size = 1000
-    generator = OneTimePasswordGenerator(characters=string.ascii_letters, length=8, unique=False)
+    generator = countersign.OneTimePasswordGenerator(characters=string.ascii_letters, length=8, unique=False)
     generated = list(itertools.islice(next(generator), sample_size))
     assert len(generated) == sample_size
 
@@ -26,7 +26,8 @@ def test_one_time_password_generator_generates_only_one_unique_string():
 
 def test_generator_constructed_from_non_unique_digit_generation_strategy_should_behave_correctly():
     sample_size = 1000
-    generator = DigitGenerationStrategy(3, placement=DigitPlacementStrategy.AFTER, unique=False).to_digit_generator()
+    generator = countersign.DigitGenerationStrategy(3, placement=DigitPlacementStrategy.AFTER,
+                                                    unique=False).to_digit_generator()
     generated = list(itertools.islice(generator, sample_size))
     assert len(generated) == sample_size
 
@@ -36,7 +37,7 @@ def test_generator_constructed_from_non_unique_digit_generation_strategy_should_
 
 def test_generator_constructed_from_unique_digit_generation_strategy_should_behave_correctly():
     sample_size = 100
-    generator = DigitGenerationStrategy(10, placement=DigitPlacementStrategy.AFTER).to_digit_generator()
+    generator = countersign.DigitGenerationStrategy(10, placement=DigitPlacementStrategy.AFTER).to_digit_generator()
     generated = list(itertools.islice(generator, sample_size))
     assert len(generated) == sample_size
 
@@ -57,22 +58,22 @@ def test_passphrase_correctly_places_digits(test_words: Sequence[str],
                                             digit_count: int,
                                             placement_strategy: DigitPlacementStrategy,
                                             pattern):
-    digit_strategy = DigitGenerationStrategy(digit_count=digit_count,
-                                             placement=placement_strategy,
-                                             unique=False)
-    generated_passphrase = passphrase(test_words, word_count=word_count, digit_strategy=digit_strategy)
+    digit_strategy = countersign.DigitGenerationStrategy(digit_count=digit_count,
+                                                         placement=placement_strategy,
+                                                         unique=False)
+    generated_passphrase = countersign.passphrase(test_words, word_count=word_count, digit_strategy=digit_strategy)
 
     assert pattern.match(generated_passphrase) is not None
 
 
 def test_passphrase_does_not_place_digits_when_strategy_is_not_provided(test_words):
-    generated_passphrase = passphrase(test_words)
+    generated_passphrase = countersign.passphrase(test_words)
     pattern = re.compile(r'^\w+$')
 
     assert pattern.match(generated_passphrase) is not None
 
 
 def test_passphrases_correctly_produces_passphrase_generator(test_words):
-    passphrase_generator = passphrases(test_words)
+    passphrase_generator = countersign.passphrases(test_words)
 
     assert isinstance(passphrase_generator, Generator)

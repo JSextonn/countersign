@@ -1,9 +1,9 @@
 import itertools
 
-from countersign.core import StringGenerator
+import countersign
 
 
-class DummyStringGenerator(StringGenerator):
+class DummyStringGenerator(countersign.StringGenerator):
     """
     Dummy string generator implementation for testing
     """
